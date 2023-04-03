@@ -1,7 +1,7 @@
 from numpy import append
 import openpyxl
 import datetime
-from stock_info import get_name
+from stock_info import get_name, get_price
 
 def export(*in_stock_num):
     wb = openpyxl.Workbook()
@@ -9,14 +9,15 @@ def export(*in_stock_num):
     sheet2 = wb.create_sheet("stock financial info", 1)
 
     # create title
-    titles = ("代號","名稱")
+    titles = ("代號","名稱","價格")
     sheet1.append(titles)
 
     # add stock info
     stock_nums = in_stock_num
     for stock_num in stock_nums:
         stock_name = get_name(stock_num)
-        stock_data = (stock_num, stock_name)
+        stock_price = get_price(stock_num)
+        stock_data = (stock_num, stock_name, stock_price)
         sheet1.append(stock_data)
 
     # create file name with current time
